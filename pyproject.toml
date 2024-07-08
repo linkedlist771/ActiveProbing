@@ -1,0 +1,18 @@
+[project]
+name = "ActiveProbing"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "LiDing", email = "72634327+linkedlist771@users.noreply.github.com"},
+]
+dependencies = [
+    "setuptools>=70.2.0",
+    "loguru>=0.7.2",
+]
+requires-python = "==3.12.*"
+readme = "README.md"
+license = {text = "MIT"}
+
+
+[tool.pdm]
+distribution = false
