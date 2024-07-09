@@ -19,7 +19,8 @@ For aws, it is simple, because the ip range is public.
 https://ip-ranges.amazonaws.com/ip-ranges.json
 
 
-> PS: for the other three I use the 
+> PS: for the other three I use the (it is a paid web, so I can only
+> part of the ips)
 `https://networksdb.io/`
 ## 2. Tencent Cloud 
 
