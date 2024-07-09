@@ -5,7 +5,7 @@
 groups = ["default"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.2"
-content_hash = "sha256:4aeb8b379dc12a5128a20413df2479370a37ff65b7367c6d3b0fd9d912b77377"
+content_hash = "sha256:f3f95c65b8eeb98fe279d9b9ec18f7387c0f491c3cf139b7403a01033d77d0e2"
 
 [[package]]
 name = "colorama"
@@ -32,6 +32,15 @@ dependencies = [
 files = [
     {file = "loguru-0.7.2-py3-none-any.whl", hash = "sha256:003d71e3d3ed35f0f8984898359d65b79e5b21943f78af86aa5491210429b8eb"},
     {file = "loguru-0.7.2.tar.gz", hash = "sha256:e671a53522515f34fd406340ee968cb9ecafbc4b36c679da03c18fd8d0bd51ac"},
+]
+
+[[package]]
+name = "python-nmap"
+version = "0.7.1"
+summary = "This is a python class to use nmap and access scan results from python3"
+groups = ["default"]
+files = [
+    {file = "python-nmap-0.7.1.tar.gz", hash = "sha256:f75af6b91dd8e3b0c31f869db32163f62ada686945e5b7c25f84bc0f7fad3b64"},
 ]
 
 [[package]]
