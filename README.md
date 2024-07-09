@@ -35,3 +35,10 @@ https://networksdb.io/ip-addresses-of/tencent-cloud-computing-beijing-co-ltd
 
 https://networksdb.io/ip-addresses-of/huawei-cloud
 
+
+
+# Format the code
+
+```bash
+bash format.sh
+```

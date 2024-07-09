@@ -11,9 +11,13 @@ def scan():
 
     try:
         # 运行 nmap 命令
-        result = subprocess.run(['nmap', '-p', ports, '-T4', ip], capture_output=True, text=True, timeout=300)  # 指定端口
+        result = subprocess.run(
+            ["nmap", "-p", ports, "-T4", ip],
+            capture_output=True,
+            text=True,
+            timeout=300,
+        )  # 指定端口
         # result = subprocess.run(['nmap', '-p-', '-T4', ip], capture_output=True, text=True, timeout=3600) # 全部端口扫描
-
 
         # 记录输出
         logger.info("Scan results:")
