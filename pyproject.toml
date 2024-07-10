@@ -17,6 +17,7 @@ dependencies = [
     "selectolax>=0.3.21",
     "requests>=2.32.3",
     "folium>=0.17.0",
+    "notebook>=7.2.1",
 ]
 requires-python = "==3.12.*"
 readme = "README.md"

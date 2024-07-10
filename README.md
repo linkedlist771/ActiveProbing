@@ -64,6 +64,11 @@ pip install pdm # if you have not installed pdm
 pdm install
 ```
 
+# Run scan
+```bash
+export PYTHONPATH=$PWD
+pdm run python active_probing/main.py
+```
 
 
 
