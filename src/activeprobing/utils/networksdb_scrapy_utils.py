@@ -46,7 +46,6 @@ class SDBWebScraper:
 
         for element in elements:
             info = {}
-
             # 提取公司信息
             company_info = element.css_first('div.col-md-7')
             if company_info:
