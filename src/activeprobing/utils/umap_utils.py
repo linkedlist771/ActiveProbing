@@ -2,6 +2,7 @@ import subprocess
 from enum import Enum
 from functools import partial
 import datetime
+from loguru import logger
 from src.activeprobing.configs.ports_config import (
     NORMAL_SERVICE_PORTS,
     NORMAL_SCAN_TIMEOUT,
@@ -61,7 +62,7 @@ if __name__ == "__main__":
     ip = "101.132.169.133"
     nmap_manager = NmapManger(ip)
     res = nmap_manager.scan()
-    print(res.stdout)
-    print(type(res.stdout))
-    print(nmap_manager.parse_result(res))
-    pass
+    parsed_res = nmap_manager.parse_result(res)
+
+    logger.debug(parsed_res)
+    logger.debug(parsed_res["stdout"])

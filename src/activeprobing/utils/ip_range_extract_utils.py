@@ -2,17 +2,10 @@ import ipaddress
 import json
 from tqdm import tqdm
 import random
-from typing import List, Dict, Iterator
+from typing import Dict, Iterator
 from concurrent.futures import ProcessPoolExecutor, as_completed
-from multiprocessing import cpu_count
+from multiprocessing import cpu_count, Manager, Lock
 from src.activeprobing.configs.path_config import RESOURCES_JSONS_DIR_PATH, RESOURCES_IP_RANGES_DIR_PATH
-from src.activeprobing.configs.sdb_configs import (
-    TENCENT_CLOUD_IPS_SDB_URL,
-    BASE_URL,
-    ALIYUN_IPS_SDB_URL,
-    HUAWEI_CLOUD_IPS_SDB_URL
-)
-from src.activeprobing.schemas.vps_ips_schemas import VpsIP
 
 
 aliyun_ips_json = RESOURCES_JSONS_DIR_PATH / "aliyun_ips_domain_binding_ips.json"
@@ -35,12 +28,18 @@ def process_prefix(prefix: Dict[str, str]) -> Iterator[Dict[str, str]]:
     for ip in ips:
         yield {"ip": str(ip), "region": region, "service": service}
 
-def process_chunk(chunk: list[Dict[str, str]], output_file: str):
-    with open(output_file, 'a') as f:
-        for prefix in tqdm(chunk, desc="Processing chunk"):
-            for ip_data in process_prefix(prefix):
+
+def process_chunk(chunk: list[Dict[str, str]], output_file: str, lock: Lock):
+    results = []
+    for prefix in tqdm(chunk, desc="Processing chunk"):
+        results.extend(process_prefix(prefix))
+
+    with lock:
+        with open(output_file, 'a') as f:
+            for ip_data in results:
                 json.dump(ip_data, f)
                 f.write('\n')
+
 
 def extract_amazon_ips(json_path: str, output_file: str):
     with open(json_path, "r") as f:
@@ -53,8 +52,12 @@ def extract_amazon_ips(json_path: str, output_file: str):
     # Clear the output file before starting
     open(output_file, 'w').close()
 
+    # 创建一个进程间可共享的锁
+    manager = Manager()
+    lock = manager.Lock()
+
     with ProcessPoolExecutor() as executor:
-        futures = [executor.submit(process_chunk, chunk, output_file) for chunk in chunks]
+        futures = [executor.submit(process_chunk, chunk, output_file, lock) for chunk in chunks]
         for future in tqdm(as_completed(futures), total=len(futures), desc="Processing Amazon prefixes"):
             future.result()  # This is just to ensure all futures complete
 
