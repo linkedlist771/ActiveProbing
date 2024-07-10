@@ -42,8 +42,11 @@ class NmapManger(object):
         self.scan_type = scan_type
         self.scan_command = self.get_scan_command()
 
-    def scan(self):
-        return self.scan_command()
+    def scan(self, json_res: bool = False):
+        if json_res:
+            return self.parse_result(self.scan_command())
+        else:
+            return self.scan_command()
 
     def parse_result(self, result):
         # 解析 nmap 输出

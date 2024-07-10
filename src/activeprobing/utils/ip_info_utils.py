@@ -7,9 +7,13 @@ from tqdm.asyncio import tqdm
 import json
 import os
 import random
-from src.activeprobing.configs.path_config import RESOURCES_IP_RANGES_DIR_PATH
+from src.activeprobing.configs.path_config import (
+    RESOURCES_IP_RANGES_DIR_PATH,
+    RESOURCES_IP_RANGES_DIR_PATH,
+)
 
 IPCOUNTS = 100
+
 
 def load_ips(file_path):
     ips = []
@@ -25,7 +29,6 @@ def load_ips(file_path):
     return ips
 
 
-
 async def get_ip_location(client, ip):
     try:
         response = await client.get(f"https://ipapi.co/{ip}/json/")
@@ -36,7 +39,7 @@ async def get_ip_location(client, ip):
             "latitude": data.get("latitude"),
             "longitude": data.get("longitude"),
             "city": data.get("city"),
-            "country": data.get("country_name")
+            "country": data.get("country_name"),
         }
     except Exception as e:
         logger.error(f"Error fetching location for IP {ip}: {str(e)}")
@@ -74,9 +77,10 @@ async def main():
     huawei_locations = await process_ip_list(huawei_ips, "huawei")
     amazon_locations = await process_ip_list(amazon_ips, "amazon")
 
-
     # 创建综合热图
-    all_locations = tencent_locations + aliyun_locations + huawei_locations + amazon_locations
+    all_locations = (
+        tencent_locations + aliyun_locations + huawei_locations + amazon_locations
+    )
     create_heatmap(all_locations, "../../../resources/htmls/all_providers_heatmap.html")
 
 
