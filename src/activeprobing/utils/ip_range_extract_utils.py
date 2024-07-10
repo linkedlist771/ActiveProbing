@@ -15,15 +15,15 @@ from src.activeprobing.configs.sdb_configs import (
 from src.activeprobing.schemas.vps_ips_schemas import VpsIP
 
 
-tencent_cloud_ips_json = RESOURCES_JSONS_DIR_PATH / "tencent_cloud_ips.json"
-aliyun_ips_json = RESOURCES_JSONS_DIR_PATH / "aliyun_ips.json"
-huawei_ips_json = RESOURCES_JSONS_DIR_PATH / "huawei_ips.json"
+aliyun_ips_json = RESOURCES_JSONS_DIR_PATH / "aliyun_ips_domain_binding_ips.json"
+tencent_cloud_ips_json = RESOURCES_JSONS_DIR_PATH / "tencent_cloud_ips_domain_binding_ips.json"
+huawei_ips_json = RESOURCES_JSONS_DIR_PATH / "huawei_ips_domain_binding_ips.json"
 amazon_ips_json = RESOURCES_JSONS_DIR_PATH / "amazon-ip-ranges.json"
 
-tencent_cloud_ips_save_path = RESOURCES_IP_RANGES_DIR_PATH / "tencent_cloud_ips.json"
-aliyun_ips_save_path = RESOURCES_IP_RANGES_DIR_PATH / "aliyun_ips.json"
-huawei_ips_save_path = RESOURCES_IP_RANGES_DIR_PATH / "huawei_ips.json"
-amazon_ips_save_path = RESOURCES_IP_RANGES_DIR_PATH / "amazon_ips.json"
+tencent_cloud_ips_save_path = RESOURCES_IP_RANGES_DIR_PATH / "tencent_cloud_ips.jsonl"
+aliyun_ips_save_path = RESOURCES_IP_RANGES_DIR_PATH / "aliyun_ips.jsonl"
+huawei_ips_save_path = RESOURCES_IP_RANGES_DIR_PATH / "huawei_ips.jsonl"
+amazon_ips_save_path = RESOURCES_IP_RANGES_DIR_PATH / "amazon_ips.jsonl"
 
 
 def process_prefix(prefix: Dict[str, str]) -> Iterator[Dict[str, str]]:
@@ -61,12 +61,25 @@ def extract_amazon_ips(json_path: str, output_file: str):
     print(f"Extraction complete. Results written to {output_file}")
 
 
-def extract_sdb_ips(json_path: str, output_file: str):
+def extract_sdb_ips(json_path: str, output_file: str, service: str):
     with open(json_path, "r") as f:
         data = json.load(f)
+    # yield {"ip": str(ip), "region": region, "service": service}
+    ips = []
+    for k, v in tqdm(data.items(), desc=f"Processing {service} IPs"):
+        for ip in v:
+            ips.append({"ip": ip, "region": "", "service": service})
+    with open(output_file, 'w') as f:
+        for ip_data in ips:
+            json.dump(ip_data, f)
+            f.write('\n')
+
+def extract_all_sdbs_ips():
+    extract_sdb_ips(aliyun_ips_json, aliyun_ips_save_path, "aliyun")
+    extract_sdb_ips(tencent_cloud_ips_json, tencent_cloud_ips_save_path, "tencent_cloud")
+    extract_sdb_ips(huawei_ips_json, huawei_ips_save_path, "huawei")
 
 
-    raise NotImplementedError
 
 if __name__ == "__main__":
     extract_amazon_ips(amazon_ips_json, amazon_ips_save_path)
@@ -80,3 +93,5 @@ if __name__ == "__main__":
     with open(amazon_ips_save_path, 'r') as f:
         line_count = sum(1 for _ in f)
     print(f"Total number of IPs extracted: {line_count}")
+
+    extract_all_sdbs_ips()

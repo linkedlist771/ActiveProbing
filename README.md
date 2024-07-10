@@ -38,6 +38,24 @@ https://networksdb.io/ip-addresses-of/tencent-cloud-computing-beijing-co-ltd
 
 https://networksdb.io/ip-addresses-of/huawei-cloud
 
+# IPS
+
+
+I have extracted the free part of the ips, you can check it 
+
+| Cloud Service Provider | IP Count |
+|------------------------|----------|
+| Tencent Cloud          | 55,700   |
+| Alibaba Cloud          | 38,937   |
+| Amazon                 | 37,959   |
+| Huawei Cloud           | 1,194    |
+
+- aliyun [here](./resources/ipranges/aliyun_ips.jsonl)
+- huawei cloud [here](./resources/ipranges/huawei_ips.jsonl)
+- tencent cloud [here](./resources/ipranges/tencent_cloud_ips.jsonl)
+- aws [here](./resources/ipranges/amazon_ips.jsonl)
+
+
 # Installation
 
 - PDM(recommended)
