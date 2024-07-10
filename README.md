@@ -4,6 +4,8 @@
 
 For this homework, we will use the active prob to analyze the 
 the regular service and each port the ip address is using.
+> For this part, let's leave alone the `IPV6` and only focus on the `IPV4`.
+
 
 For vps server like :
 - AWS
@@ -36,6 +38,15 @@ https://networksdb.io/ip-addresses-of/tencent-cloud-computing-beijing-co-ltd
 
 https://networksdb.io/ip-addresses-of/huawei-cloud
 
+# Installation
+
+- PDM(recommended)
+```bash
+pip install pdm # if you have not installed pdm
+pdm install
+```
+
+
 
 
 # Format the code
@@ -43,3 +54,7 @@ https://networksdb.io/ip-addresses-of/huawei-cloud
 ```bash
 bash format.sh
 ```
+
+
+# To check the whole process 
+please refer [here](./整个流程介绍.md)
