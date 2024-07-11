@@ -8,6 +8,7 @@ __pycache__/
 .idea
 
 ubuntu_version/
+*.csv
 
 # Distribution / packaging
 .Python

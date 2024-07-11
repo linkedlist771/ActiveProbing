@@ -59,8 +59,9 @@ ALL_SERVICE_PORTS = [
     11211,
 ]
 
+NORMAL_SERVICE_PORTS_LIST = [str(port) for port in sorted(set(ALL_SERVICE_PORTS))]
 # 将列表排序并去重
-NORMAL_SERVICE_PORTS = ",".join([str(port) for port in sorted(set(ALL_SERVICE_PORTS))])
+NORMAL_SERVICE_PORTS = ",".join(NORMAL_SERVICE_PORTS_LIST)
 
 NORMAL_SCAN_TIMEOUT = 300
 
